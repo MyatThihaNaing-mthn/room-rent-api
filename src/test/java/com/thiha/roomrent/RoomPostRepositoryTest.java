@@ -3,7 +3,6 @@ package com.thiha.roomrent;
 import static org.junit.Assert.assertThrows;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.assertj.core.api.Assertions;
