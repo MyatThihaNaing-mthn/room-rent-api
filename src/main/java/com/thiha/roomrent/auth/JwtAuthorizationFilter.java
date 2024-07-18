@@ -4,12 +4,14 @@ package com.thiha.roomrent.auth;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.http.MediaType;
 import com.fasterxml.jackson.core.exc.StreamWriteException;
@@ -17,24 +19,27 @@ import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thiha.roomrent.dto.TokenDto;
 import com.thiha.roomrent.security.RoomRentUserDetailsService;
-import com.thiha.roomrent.service.impl.JwtTokenServiceImpl;
-
+import com.thiha.roomrent.service.JwtTokenService;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@Component
+@Configuration
 public class JwtAuthorizationFilter extends OncePerRequestFilter{
+    @Autowired
     private final JwtUtils jwtUtils;
+    @Autowired
     private final ObjectMapper mapper;
+    @Autowired
     private final RoomRentUserDetailsService roomRentUserDetailsService;
-    private final JwtTokenServiceImpl tokenService;
+    @Autowired
+    private final JwtTokenService tokenService;
 
     public JwtAuthorizationFilter(JwtUtils jwtUtils, ObjectMapper mapper,
      RoomRentUserDetailsService roomRentUserDetailsService,
-     JwtTokenServiceImpl tokenService) {
+     JwtTokenService tokenService) {
         this.jwtUtils = jwtUtils;
         this.mapper = mapper;
         this.roomRentUserDetailsService = roomRentUserDetailsService;
